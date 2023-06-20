@@ -2,9 +2,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const dbConnection = require('./config/db');
 
 // Load Environment Variable
 dotenv.config({ path:'./config/config.env'});
+
+// Connect to the db
+dbConnection();
 
 // Import Routes
 const fixtures = require('./routes/fixture-lists');
