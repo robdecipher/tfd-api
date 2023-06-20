@@ -6,8 +6,17 @@ const colors = require('colors');
 // Load Environment Variable
 dotenv.config({ path:'./config/config.env'});
 
+// Import Routes
+const fixtures = require('./routes/fixture-lists');
+
 // Mount Express
 const app = express();
+
+// Body Parser
+app.use(express.json());
+
+// Mount Routes
+app.use('/api/v1/fixture-lists', fixtures);
 
 // App Listener & PORT
 const PORT = process.env.PORT || 5000;
