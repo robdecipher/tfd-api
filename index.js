@@ -1,8 +1,10 @@
 // Required Imports
 const express = require('express');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 const colors = require('colors');
 const dbConnection = require('./config/db');
+const errorHandler = require('./middleware/error');
 
 // Load Environment Variable
 dotenv.config({ path:'./config/config.env'});
@@ -19,8 +21,16 @@ const app = express();
 // Body Parser
 app.use(express.json());
 
+// Development Console Log Middleware
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
 // Mount Routes
 app.use('/api/v1/fixture-lists', fixtures);
+
+// Error Handling
+app.use(errorHandler);
 
 // App Listener & PORT
 const PORT = process.env.PORT || 5000;
