@@ -1,5 +1,6 @@
 // Required Imports
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 // Schema for a Fixture
 const FixtureSchema = new mongoose.Schema({
@@ -11,6 +12,9 @@ const FixtureSchema = new mongoose.Schema({
     awayTeam: {
         type:String,
         required:true
+    },
+    slug: {
+        type:String
     },
     location: {
         type:String,
@@ -49,6 +53,12 @@ const FixtureSchema = new mongoose.Schema({
         type:String
     }
 
+});
+
+// Create URL Slug from Home & Away Teams
+FixtureSchema.pre('save', function(next) {
+    this.slug = slugify(this.homeTeam + '-vs-' + this.awayTeam, { lower:true });
+    next();
 });
 
 // Export the Model
