@@ -5,6 +5,9 @@ const slugify = require('slugify');
 // Schema for a Fixture
 const FixtureSchema = new mongoose.Schema({
 
+    fixtureID: {
+        type:Number
+    },
     homeTeam: {
         type:String,
         required:true
@@ -17,15 +20,10 @@ const FixtureSchema = new mongoose.Schema({
         type:String
     },
     location: {
-        type:String,
-        required:true
+        type:String
     },
     competitionID: {
         type:Number,
-        required:true
-    },
-    competitionType: {
-        type:String,
         required:true
     },
     competitionName:{

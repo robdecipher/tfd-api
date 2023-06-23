@@ -3,8 +3,10 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
+const nodeCron = require('node-cron');
 const dbConnection = require('./config/db');
 const errorHandler = require('./middleware/error');
+const importFixtureData = require('./helpers/db-importer');
 
 // Load Environment Variable
 dotenv.config({ path:'./config/config.env'});
@@ -31,6 +33,12 @@ app.use('/api/v1/fixture-lists', fixtures);
 
 // Error Handling
 app.use(errorHandler);
+
+// Fetch Fixture Data Cron Job
+const job = nodeCron.schedule("*/1 * * * *", () => {
+    console.log('CRON Job is starting!');
+    importFixtureData.importFixtureData();
+});
 
 // App Listener & PORT
 const PORT = process.env.PORT || 5000;
