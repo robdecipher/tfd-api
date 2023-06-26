@@ -40,34 +40,46 @@ exports.importFixtureData = asyncHandler(async() => {
     });
 
     // # of Records Update
-    let success = 0;
+    let noUpdate = 0;
+    let created = 0;
+    let updated = 0;
 
     // Update the db
     for(let i = 0; i < data.length; i++) {
 
+        // Does the record already exist
         let filter = { fixtureID: data[i].fixtureID };
-        let options = { upsert:true };
-
         let exists = await Fixture.exists(filter);
 
+        // No update needed if the match in the db is already complete
+        if(exists !== null && data[i].matchStatus === 'Match Finished') {
+            console.log('No Update');
+            noUpdate++;
+            continue;
+        }
+
+        // Insert data to the db.
         if(exists === null) {
+            // If no record, create a new document
             await Fixture.create(data[i]);
+            created++;
             console.log(`Created Fixture ${data[i].fixtureID}`.green.underline.bold);
         } else {
+            // If exists, just update
             await Fixture.updateOne(data[i]);
+            updated++;
             console.log(`Updated Fixture ${data[i].fixtureID}`.yellow.underline.bold);
         }
-        success++;
 
     }
 
-    // Validate the number of records updated vs. data supplied
-    if(success === allFixtures.length) {
-        console.log(colors.green.inverse.bold(success + ' fixtures were updated in the db!'));
-    } else {
-        const diff = allFixtures.length - success;
-        console.log(colors.red.inverse.bold(diff + ' fixtures were not updated in the db!'));
-    }
-
+    // Database Import statistics and what happened when the function ran.
+    const total = noUpdate + created + updated;
+    const diff = allFixtures.length - total;
+    console.log(`${created} Documents Created`.green);
+    console.log(`${updated} Documents Updated`.magenta);
+    console.log(`${noUpdate} Documents Not Updated`.cyan);
+    console.log(`${total} Total # of Documents`.blue);
+    console.log(`${diff} differences in the db update process!`.red);
 
 });

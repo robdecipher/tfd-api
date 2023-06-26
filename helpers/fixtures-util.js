@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path:'./config/config.env' });
 
 // Set API Connection Info
-const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?date=';
+const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?league=';
 const options = {
     method: 'GET',
     headers: {
@@ -19,26 +19,29 @@ const options = {
 const today = new Date().toISOString().slice(0,10);
 console.log(today);
 
-// Final URL
-const urlFinal = url + today;
-console.log(urlFinal);
-
+// MLS League ID
+const leagues = ['253','479','128','71'];
 
 // Fetch the Data
 exports.getFixtureData = asyncHandler(async () => {
 
-    const response = await fetch(urlFinal,options);
-    const data = await response.json();
-
-    const unpackedData = data.response;
-
     const fixtureData = [];
 
-
-    for(i=0;i<unpackedData.length;i++) {
-        fixtureData.push({
-            ...unpackedData[i]
-        });
+    for(var i = 0;i < leagues.length; i++) {
+        // Build the URL for Fetching
+        let getDataUrl = url + leagues[i] + '&season=2023';
+        console.log(getDataUrl);
+        // Get the Data
+        const response = await fetch(getDataUrl, options);
+        const data = await response.json();
+        // Unpack the needed data
+        const unpackedData = data.response;
+        // Push data to the final array
+        for(var j = 0;j < unpackedData.length;j++) {
+            fixtureData.push({
+                ...unpackedData[j]
+            });
+        }
     }
 
     return fixtureData;

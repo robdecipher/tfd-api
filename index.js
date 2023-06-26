@@ -35,7 +35,7 @@ app.use('/api/v1/fixture-lists', fixtures);
 app.use(errorHandler);
 
 // Fetch Fixture Data Cron Job
-const job = nodeCron.schedule("*/1 * * * *", () => {
+const job = nodeCron.schedule("0 5 5 * * *", () => {
     console.log('CRON Job is starting!');
     importFixtureData.importFixtureData();
 });

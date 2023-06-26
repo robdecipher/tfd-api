@@ -59,5 +59,26 @@ FixtureSchema.pre('save', function(next) {
     next();
 });
 
+// Create Match Result from Home & Away Goals
+FixtureSchema.pre('save', function(next) {
+    if(this.matchStatus === 'Match Finished') {
+        if(this.homeGoals > this.awayGoals) {
+            this.matchResult = 'Home Win';
+            next();
+        } else if(this.homeGoals < this.awayGoals) {
+            this.matchResult = 'Away Win';
+            next();
+        } else if(this.homeGoals === 0 && this.awayGoals === 0) {
+            this.matchResult = 'Nil Nil Draw';
+            next();
+        } else {
+            this.matchResult = 'Score Draw';
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
 // Export the Model
 module.exports = mongoose.model('Fixture', FixtureSchema);
