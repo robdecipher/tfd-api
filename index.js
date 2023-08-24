@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 // Fetch Fixture Data Cron Job
-
+console.log('CRON jobs will be added later');
 /*const job = nodeCron.schedule("5 23 * * *", () => {
     console.log('CRON Job is starting!');
     importFixtureData.importFixtureData();
