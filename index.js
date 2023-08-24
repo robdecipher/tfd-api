@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const colors = require('colors');
 const nodeCron = require('node-cron');
-const dbConnection = require('./config/db');
+const dbConnection = require('./helpers/db/db');
 const errorHandler = require('./middleware/error');
 
 // Load Environment Variable
