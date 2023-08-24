@@ -7,7 +7,7 @@ const asyncHandler = require('../middleware/async');
 // @route           GET /api/v1/fixture-lists
 // @access          Public
 exports.getFixtureLists = asyncHandler(async (req,res,next) => {
-    const fixtures = await Fixture.find();
+    const fixtures = await Fixture.find(req.query);
     res.status(200).json({
         success:true,
         count:fixtures.length,

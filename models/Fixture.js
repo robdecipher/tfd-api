@@ -50,7 +50,6 @@ const FixtureSchema = new mongoose.Schema({
     matchStatus: {
         type:String
     }
-
 });
 
 // Create URL Slug from Home & Away Teams

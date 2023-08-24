@@ -2,11 +2,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const cors = require('cors');
 const colors = require('colors');
 const nodeCron = require('node-cron');
 const dbConnection = require('./config/db');
 const errorHandler = require('./middleware/error');
-const importFixtureData = require('./helpers/db-importer');
 
 // Load Environment Variable
 dotenv.config({ path:'./config/config.env'});
@@ -16,6 +16,7 @@ dbConnection();
 
 // Import Routes
 const fixtures = require('./routes/fixture-lists');
+const goalPredictions = require('./routes/goal-predictions');
 
 // Mount Express
 const app = express();
@@ -30,15 +31,31 @@ if(process.env.NODE_ENV === 'development') {
 
 // Mount Routes
 app.use('/api/v1/fixture-lists', fixtures);
+app.use('/api/v1/goal-predictions', goalPredictions);
+
+// CORS
+app.use(cors());
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
 
 // Error Handling
 app.use(errorHandler);
 
 // Fetch Fixture Data Cron Job
-const job = nodeCron.schedule("0 5 5 * * *", () => {
+
+/*const job = nodeCron.schedule("5 23 * * *", () => {
     console.log('CRON Job is starting!');
     importFixtureData.importFixtureData();
 });
+
+const goalsForm = nodeCron.schedule("8 13 * * *", () => {
+    console.log('CRON Job is starting!');
+    updateTeamForm.updateTeamForm();
+});*/
 
 // App Listener & PORT
 const PORT = process.env.PORT || 5000;
