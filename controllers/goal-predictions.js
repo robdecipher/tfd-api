@@ -27,7 +27,7 @@ exports.getOverTwoPointFive = asyncHandler(async (req,res,next) => {
         _id:0,
         overOnePointFive:0,
         bothTeamsToScore:0,
-    });
+    }).sort({fixtureDate:1});
     res.status(200).json({
         success:true,
         count:predictions.length,
@@ -43,7 +43,7 @@ exports.getBothTeamsToScore = asyncHandler(async (req,res,next) => {
         _id:0,
         overOnePointFive:0,
         overTwoPointFive:0,
-    });
+    }).sort({fixtureDate:1});
     res.status(200).json({
         success:true,
         count:predictions.length,
