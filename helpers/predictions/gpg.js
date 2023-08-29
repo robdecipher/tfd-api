@@ -75,6 +75,7 @@ exports.createGPGPredictions = asyncHandler(async() => {
         }
         let gpgaTwo = (gsaTwo + gcaTwo) / 2;
         // Over 2.5 Goals
+        /*
         let gsaThree = 0;
         let gcaThree = 0;
         if(totalGS >= 3) {
@@ -88,6 +89,21 @@ exports.createGPGPredictions = asyncHandler(async() => {
             gcaThree = totalGC / 3;
         }
         let gpgaThree = (gsaThree + gcaThree) / 2;
+        */
+
+        let homeThree = 0;
+        let awayThree = 0;
+        if(homeAVGGS + homeAVGGC >= 3) {
+            homeThree = 1;
+        } else {
+            homeThree = (homeAVGGS + homeAVGGC) / 3;
+        }
+        if(awayAVGGS + awayAVGGC >= 3) {
+            awayThree = 1;
+        } else {
+            awayThree = (awayAVGGS + awayAVGGC) / 3;
+        }
+        let gpgaThree = (homeThree + awayThree) / 2;
 
         // Poisson Over 1.5 & 2.5 Goals
         let psTwo = 0;
@@ -108,20 +124,26 @@ exports.createGPGPredictions = asyncHandler(async() => {
         }
 
         // Both Teams to Score
-        // Home Goal Factors
-        let bttsHome = 0;
-        if(homeAVGGS >= 1 && homeAVGGS >= 1) {
+        // Home Goals Factor
+        if(homeAVGGS >= 1 && homeAVGGC >=1) {
             bttsHome = 1;
+        } else if(homeAVGGS >= 1 && homeAVGGC < 1) {
+            bttsHome = 0.5 + (homeAVGGC * 0.5);
+        } else if(homeAVGGS < 1 && homeAVGGC >= 1) {
+            bttsHome = (homeAVGGS * 0.5) + 0.5;
         } else {
-            bttsHome = ((homeAVGGS / 1) + (homeAVGGC / 1)) / 2;
+            bttsHome = (homeAVGGS * 0.5) + (homeAVGGC * 0.5);
         }
 
-       // Away Goal Factor
-       let bttsAway = 0;
-        if(awayAVGGS >= 1 && awayAVGGS >= 1) {
+        // Away Goals Factor
+        if(awayAVGGS >= 1 && awayAVGGC >=1) {
             bttsAway = 1;
+        } else if(awayAVGGS >= 1 && awayAVGGC < 1) {
+            bttsAway = 0.5 + (awayAVGGC * 0.5);
+        } else if(awayAVGGS < 1 && awayAVGGC >= 1) {
+            bttsAway = (awayAVGGS * 0.5) + 0.5;
         } else {
-            bttsAway = ((awayAVGGS / 1) + (awayAVGGC / 1)) / 2;
+            bttsAway = (awayAVGGS * 0.5) + (awayAVGGC * 0.5);
         }
 
         // Total Factor for calculation
@@ -136,6 +158,7 @@ exports.createGPGPredictions = asyncHandler(async() => {
                 bttsPD += pd[c].calcResult.scoreP;
             }
         }
+
 
 
 
