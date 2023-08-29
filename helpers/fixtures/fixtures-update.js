@@ -19,7 +19,7 @@ const options = {
 };
 
 // League IDs to be Updated
-const leagues = ['39','40','41','42','43','140','141','78','79','61','62'];
+const leagues = ['39','40','41','42','43','140','141','78','79','61','62','106','107'];
 
 // From/To date for query
 const today = new Date();
