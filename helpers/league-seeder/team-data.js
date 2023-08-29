@@ -19,7 +19,7 @@ const options = {
 };
 
 // League IDs to be Updated
-const leagues = ['39','40','41','42','43'];
+const leagues = ['79','62'];
 
 // Fetch the Data
 exports.getTeamBasicData = asyncHandler(async() => {

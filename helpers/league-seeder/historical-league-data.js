@@ -22,7 +22,7 @@ const options = {
 const seasons = ['2022', '2023'];
 
 // League IDs to be Updated
-const leagues = ['39','40','41','42','43'];
+const leagues = ['79','62'];
 
 // From/To date for query
 const startDate = '2021-08-01';

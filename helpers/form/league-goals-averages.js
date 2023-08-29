@@ -10,7 +10,7 @@ const GoalsLeague = require('../../models/GoalsLeague');
 dotenv.config({ path:'./config/config.env' });
 
 // League Tables to create
-const leagues = [39,40,41,42,43];
+const leagues = [39,40,41,42,43,140,141,78,79,61,62];
 
 exports.updateGoalAverages = asyncHandler(async() => {
 
