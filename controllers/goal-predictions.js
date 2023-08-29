@@ -10,7 +10,7 @@ const timeNow = new Date().getTime();
 // @route           GET /api/v1/goal-predictions/over-1.5-goals
 // @access          Public
 exports.getOverOnePointFive = asyncHandler(async (req,res,next) => {
-    const predictions = await OverGoals.find({fixtureTime:{'$gte':timeNow}, competitionID:{$nin:[79,62,107]}}, {
+    const predictions = await OverGoals.find({fixtureTime:{'$gte':timeNow}, competitionID:{$nin:[141,79,62,107]}}, {
         _id:0,
         overTwoPointFive:0,
         bothTeamsToScore:0,
