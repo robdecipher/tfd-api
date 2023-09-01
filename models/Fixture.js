@@ -49,6 +49,18 @@ const FixtureSchema = new mongoose.Schema({
     },
     matchStatus: {
         type:String
+    },
+    homeProbability: {
+        type:Number,
+    },
+    awayProbability: {
+        type:Number,
+    },
+    drawProbability: {
+        type:Number,
+    },
+    season: {
+        type:String,
     }
 });
 

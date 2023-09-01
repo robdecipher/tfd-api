@@ -19,7 +19,7 @@ const options = {
 };
 
 // League IDs to be Updated
-const leagues = ['39','40','41','42','43','140','141','78','79','61','62','106','107'];
+const leagues = [39,40,41,42,43,140,141,78,79,61,62,106,107,253,94,95,88,89,144,145,179,180,183,184];
 
 // From/To date for query
 const today = new Date();
@@ -40,7 +40,7 @@ exports.updateResultsAndFixtures = asyncHandler(async() => {
     // FETCH data from the API and push it to the array
     for(var a = 0; a < leagues.length; a++) {
         // API call URL
-        let fetchURL = url + leagues[a] + '&season=2023' + '&from=2023-08-24' + '&to=' + endDate;
+        let fetchURL = url + leagues[a] + '&season=2023' + '&from=' + startDate + '&to=' + endDate;
         console.log(fetchURL);
         // Call the API
         const response = await fetch(fetchURL,options);

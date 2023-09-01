@@ -88,6 +88,18 @@ const FormSchema = new mongoose.Schema({
     awayGamesConcededRatio: {
         type:Number,
     },
+    promoted: {
+        type:Boolean,
+    },
+    relegated: {
+        type:Boolean,
+    },
+    homeLastSeasonGames: {
+        type:Number,
+    },
+    awayLastSeasonGames: {
+        type:Number,
+    },
 });
 
 // Calculate average scored & conceded

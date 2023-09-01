@@ -22,7 +22,7 @@ const options = {
 const seasons = ['2022', '2023'];
 
 // League IDs to be Updated
-const leagues = ['106','107'];
+const leagues = [179,180,183,184,730,731];
 
 // From/To date for query
 const startDate = '2021-08-01';
@@ -49,11 +49,12 @@ exports.getHistoricalLeagueData = asyncHandler(async() => {
             const response = await fetch(fetchURL,options);
             const data = await response.json();
             // Unpack the needed data
-            const requiredData = data.response;
+            const requiredData = await data.response;
             // Loop over the data and push it to final Array
             for(var c = 0; c < requiredData.length; c++) {
                 fixtureData.push({
-                    ...requiredData[c]
+                    ...requiredData[c],
+                    season:seasons[a]
                 });
             }
         }
@@ -71,7 +72,8 @@ exports.getHistoricalLeagueData = asyncHandler(async() => {
         fixtureTime:fixture.fixture.timestamp,
         homeGoals:fixture.goals.home,
         awayGoals:fixture.goals.away,
-        matchStatus:fixture.fixture.status.long
+        matchStatus:fixture.fixture.status.long,
+        season:fixture.season,
     }));
 
     // Connect to the db

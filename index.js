@@ -17,6 +17,7 @@ dbConnection();
 // Import Routes
 const fixtures = require('./routes/fixture-lists');
 const goalPredictions = require('./routes/goal-predictions');
+const matchPredictions = require('./routes/match-predictions');
 
 // Mount Express
 const app = express();
@@ -32,6 +33,7 @@ if(process.env.NODE_ENV === 'development') {
 // Mount Routes
 app.use('/api/v1/fixture-lists', fixtures);
 app.use('/api/v1/goal-predictions', goalPredictions);
+app.use('/api/v1/match-predictions', matchPredictions);
 
 // CORS
 app.use(cors());

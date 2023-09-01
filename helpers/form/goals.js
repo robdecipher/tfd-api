@@ -9,8 +9,6 @@ const Fixture = require('../../models/Fixture');
 const Form = require('../../models/Form');
 dotenv.config({ path:'./config/config.env' });
 
-//const LeagueOne = ['Barnsley', 'Blackpool', 'Bolton', 'Bristol Rovers', 'Burton Albion', 'Cambridge United'];
-
 // Update Form of each team Home & Away
 exports.updateTeamForm = asyncHandler(async() => {
 
@@ -61,6 +59,8 @@ exports.updateTeamForm = asyncHandler(async() => {
         let agc = 0;
         let angs = 0;
         let angc = 0;
+        let homeLastSeasonGames = 0;
+        let awayLastSeasonGames = 0;
         
 
         // Home Form
@@ -79,6 +79,9 @@ exports.updateTeamForm = asyncHandler(async() => {
             }
             if(homeData[b].awayGoals > 0) {
                 hngc++;
+            }
+            if(homeData[b].season === '2022') {
+                homeLastSeasonGames++;
             }
         }
 
@@ -105,6 +108,9 @@ exports.updateTeamForm = asyncHandler(async() => {
             }
             if(awayData[c].homeGoals > 0) {
                 angc++;
+            }
+            if(awayData[c].season === '2022') {
+                awayLastSeasonGames++;
             }
         }
 
@@ -142,6 +148,8 @@ exports.updateTeamForm = asyncHandler(async() => {
             awayGamesScoredRatio:Number(agsr),
             numberOfAwayGamesConceded:Number(angc),
             awayGamesConcededRatio:Number(agcr),
+            homeLastSeasonGames:Number(homeLastSeasonGames),
+            awayLastSeasonGames:Number(awayLastSeasonGames),
         }
 
         console.log(teamForm);

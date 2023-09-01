@@ -19,7 +19,10 @@ const options = {
 };
 
 // League IDs to be Updated
-const leagues = ['106','107'];
+const leagues = [179,180,183,184];
+
+const promoted = ['Dundee','Airdrie United','Dunfermline','Annan Athletic','Stirling Albion','Spartans'];
+const relegated = ['Dundee Utd','Cove Rangers','Hamilton Academical','Clyde','Peterhead'];
 
 // Fetch the Data
 exports.getTeamBasicData = asyncHandler(async() => {
@@ -42,9 +45,19 @@ exports.getTeamBasicData = asyncHandler(async() => {
         const teamData = data.response;
         // Loop over the data and push it to final Array
         for(var b = 0; b < teamData.length; b++) {
+            let promotion = 0;
+            let relegation = 0;
+            if(promoted.includes(teamData[b].team.name)) {
+                promotion = 1;
+            }
+            if(relegated.includes(teamData[b].team.name)) {
+                relegation = 1;
+            }
             teams.push({
                 ...teamData[b],
                 league:leagues[a],
+                promoted:promotion,
+                relegated:relegation,
             });
         }
     }
@@ -53,6 +66,8 @@ exports.getTeamBasicData = asyncHandler(async() => {
     const importData = teams.map(team => ({
         teamName:team.team.name,
         league:team.league,
+        promoted:team.promoted,
+        relegated:team.relegated,
     }));
 
     // Connect to the db
